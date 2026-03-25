@@ -37,6 +37,16 @@
                             <TextBlock Text="75%" HorizontalAlignment="Right" FontWeight="Bold"/>
                         </Grid>
                         <ProgressBar Value="75" Height="8" Foreground="#0078D4"/>
+                        <TextBlock Text="375 GB von 500 GB belegt" FontSize="11" Margin="0,10,0,0" Foreground="Gray"/>
+                    </StackPanel>
+                </ui:Card>
+
+                <ui:Card Margin="0,0,15,15" Width="320" Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="⚡ Festplattennutzung" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                        <TextBlock Text="Lesen: 12.5 MB/s" FontSize="12" Foreground="Gray"/>
+                        <TextBlock Text="Schreiben: 4.2 MB/s" FontSize="12" Foreground="Gray" Margin="0,2,0,0"/>
+                        <TextBlock Text="Aktivität: Hoch" FontSize="11" Margin="0,8,0,0" Foreground="#0078D4"/>
                     </StackPanel>
                 </ui:Card>
 
@@ -44,7 +54,15 @@
                     <StackPanel>
                         <TextBlock Text="🌐 Ethernet (LAN)" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,12"/>
                         <ProgressBar Value="45" Height="8" Foreground="Purple"/>
-                        <TextBlock Text="Status: Verbunden" FontSize="11" Margin="0,8,0,0" Foreground="Gray"/>
+                        <TextBlock Text="Recv: 1.2 Mbps | Send: 300 Kbps" FontSize="11" Margin="0,8,0,0" Foreground="Gray"/>
+                    </StackPanel>
+                </ui:Card>
+
+                <ui:Card Margin="0,0,15,15" Width="320" Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="📶 Wi-Fi" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                        <ProgressBar Value="12" Height="8" Foreground="HotPink"/>
+                        <TextBlock Text="Recv: 150 Kbps | Send: 45 Kbps" FontSize="11" Margin="0,8,0,0" Foreground="Gray"/>
                     </StackPanel>
                 </ui:Card>
             </WrapPanel>
@@ -55,13 +73,21 @@
                         <ui:SymbolIcon Symbol="Code24" Foreground="LightGreen" Margin="0,0,10,0"/>
                         <TextBlock Text="System Live-Log" FontWeight="Bold" Foreground="White" VerticalAlignment="Center"/>
                     </StackPanel>
+
                     <Border Background="Black" CornerRadius="4" Padding="10" Height="150">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="[" Foreground="Gray" FontFamily="Consolas" FontSize="12"/>
-                                    <TextBlock Text="{Binding ViewModel.CurrentComputerName}" Foreground="LightBlue" FontFamily="Consolas" FontSize="12"/>
-                                    <TextBlock Text="] System-Monitor gestartet..." Foreground="LightGreen" FontFamily="Consolas" FontSize="12" Margin="5,0,0,0"/>
+                                    <TextBlock Text="{Binding ViewModel.CurrentComputerName}" 
+                                               Foreground="LightBlue" 
+                                               FontFamily="Consolas" 
+                                               FontSize="12"/>
+                                    <TextBlock Text="] System-Monitor gestartet..." 
+                                               Foreground="LightGreen" 
+                                               FontFamily="Consolas" 
+                                               FontSize="12" 
+                                               Margin="5,0,0,0"/>
                                 </StackPanel>
 
                                 <TextBlock Text="[INFO] Verbindung zu lokalen Sensoren hergestellt." Foreground="White" FontFamily="Consolas" FontSize="12"/>
@@ -72,6 +98,7 @@
                     </Border>
                 </StackPanel>
             </ui:Card>
+
         </StackPanel>
     </ScrollViewer>
 </Page>
