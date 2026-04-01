@@ -1,4 +1,12 @@
-﻿using UiDesktopApp_LF8.ViewModels.Windows;
+﻿using Newtonsoft.Json;
+using RestSharp;
+using System.Collections;
+using System.Windows.Controls;
+using UiDesktopApp_LF8.Helpers;
+using UiDesktopApp_LF8.JsonTypes;
+using UiDesktopApp_LF8.ViewModels.Pages;
+using UiDesktopApp_LF8.ViewModels.Windows;
+using UiDesktopApp_LF8.Views.Pages;
 using Wpf.Ui;
 using Wpf.Ui.Abstractions;
 using Wpf.Ui.Appearance;
@@ -26,10 +34,34 @@ namespace UiDesktopApp_LF8.Views.Windows
             InitializeComponent();
             SetPageService(navigationViewPageProvider);
 
+            RootNavigation.ItemInvoked += RootNavigation_ItemInvoked;
+
             _navigationService.SetNavigationControl(RootNavigation);
 
-            // Dieses Event sorgt dafür, dass beim Start direkt das Dashboard geladen wird
-            Loaded += (s, e) => _navigationService.Navigate(typeof(Views.Pages.DashboardPage));
+            Loaded += async (s, e) => ViewModel.LoadComputers();
+        }
+
+        private void RootNavigation_ItemInvoked(NavigationView sender, RoutedEventArgs e)
+        {
+            if (sender.SelectedItem is NavigationViewItem item)
+            {
+                // Is this a computer item?
+                if (item.Tag is KeyValuePair<string, MonitoringData> computer)
+                {
+                    // Remember which computer we want to show
+                    Storage.CurrentComputer = computer;
+
+                    // Navigate using the Type (this is what WPF UI expects)
+                    sender.Navigate(typeof(ComputerMonitorPage));
+                    return;
+                }
+
+                // Handle normal static items (Dashboard, Settings, etc.)
+                if (item.TargetPageType != null)
+                {
+                    sender.Navigate(item.TargetPageType);
+                }
+            }
         }
 
         #region INavigationWindow methods

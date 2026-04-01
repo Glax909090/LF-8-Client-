@@ -1,0 +1,85 @@
+﻿<Page x:Class="UiDesktopApp_LF8.Views.Pages.ComputerMonitorPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:models="clr-namespace:UiDesktopApp_LF8.Models"
+      Title="{Binding ComputerName}">
+
+    <ScrollViewer>
+        <StackPanel Margin="25">
+
+            <!-- Header -->
+            <TextBlock Text="{Binding ComputerName}" 
+                       FontSize="28" 
+                       FontWeight="Bold" 
+                       Margin="0,0,0,25" 
+                       Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"/>
+
+            <!-- CPU + RAM -->
+            <WrapPanel>
+                <ui:Card Margin="0,0,15,15" Width="320" Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="📊 Prozessor (CPU)" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                        <ProgressBar Value="{Binding Cpu.Usage}" Height="10" Foreground="#0078D4"/>
+                        <TextBlock Text="{Binding Cpu.UsageText}" FontSize="12" Margin="0,10,0,0" Foreground="Gray"/>
+                    </StackPanel>
+                </ui:Card>
+
+                <ui:Card Margin="0,0,15,15" Width="320" Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="🧠 Arbeitsspeicher (RAM)" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                        <ProgressBar Value="{Binding Ram.Usage}" Height="10" Foreground="Orange"/>
+                        <TextBlock Text="{Binding Ram.UsageText}" FontSize="12" Margin="0,10,0,0" Foreground="Gray"/>
+                    </StackPanel>
+                </ui:Card>
+            </WrapPanel>
+
+            <!-- Dynamic Drives -->
+            <TextBlock Text="💾 Festplatten" FontSize="20" FontWeight="SemiBold" Margin="0,25,0,10"/>
+            <ItemsControl ItemsSource="{Binding Drives}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type models:DriveMetric}">
+                        <ui:Card Margin="0,0,15,15" Width="320" Padding="20">
+                            <StackPanel>
+                                <Grid Margin="0,0,0,5">
+                                    <TextBlock Text="{Binding DriveLetter}" Foreground="Gray"/>
+                                    <TextBlock Text="{Binding UsageText}" HorizontalAlignment="Right" FontWeight="Bold"/>
+                                </Grid>
+                                <ProgressBar Value="{Binding PercentUsed}" Height="8" Foreground="#0078D4"/>
+                                <TextBlock Text="{Binding UsedText}" FontSize="11" Margin="0,10,0,0" Foreground="Gray"/>
+                            </StackPanel>
+                        </ui:Card>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- Dynamic Network Adapters -->
+            <TextBlock Text="🌐 Netzwerkadapter" FontSize="20" FontWeight="SemiBold" Margin="0,25,0,10"/>
+            <ItemsControl ItemsSource="{Binding Networks}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type models:NetworkMetric}">
+                        <ui:Card Margin="0,0,15,15" Width="320" Padding="20">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                                <ProgressBar Value="{Binding Usage}" Height="8" Foreground="Purple"/>
+                                <TextBlock Text="{Binding RecvSpeed}" FontSize="12" Foreground="Gray" Margin="0,8,0,0"/>
+                                <TextBlock Text="{Binding SendSpeed}" FontSize="12" Foreground="Gray"/>
+                            </StackPanel>
+                        </ui:Card>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>
