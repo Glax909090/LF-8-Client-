@@ -1,9 +1,11 @@
-﻿using UiDesktopApp_LF8.Views.Pages;
-using UiDesktopApp_LF8.JsonTypes;
-using UiDesktopApp_LF8.Helpers;
-using System.Diagnostics;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using RestSharp;
+using System.Diagnostics;
+using UiDesktopApp_LF8.Helpers;
+using UiDesktopApp_LF8.JsonTypes;
+using UiDesktopApp_LF8.ViewModels.Windows;
+using UiDesktopApp_LF8.Views.Pages;
+using UiDesktopApp_LF8.Views.Windows;
 using Wpf.Ui;
 
 namespace UiDesktopApp_LF8.ViewModels.Pages
@@ -73,7 +75,15 @@ namespace UiDesktopApp_LF8.ViewModels.Pages
                 } else
                 {
                     Storage.AuthToken = authResponse.AuthToken!;
-                    _navigationService.Navigate(typeof(ComputerMonitorPage));
+                    if (Application.Current.MainWindow is MainWindow window)
+                    {
+                        if (window.ViewModel is MainWindowViewModel mainVM)
+                        {
+                            Trace.WriteLine("loading computers");
+                            mainVM.LoadComputers();
+                        }
+                    }
+                    //_navigationService.Navigate(typeof(ComputerMonitorPage));
                     
                 }
             }

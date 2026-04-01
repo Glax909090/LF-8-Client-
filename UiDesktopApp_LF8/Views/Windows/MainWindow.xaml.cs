@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
 using System.Collections;
+using System.Diagnostics;
 using System.Windows.Controls;
+using System.Windows.Media;
 using UiDesktopApp_LF8.Helpers;
 using UiDesktopApp_LF8.JsonTypes;
 using UiDesktopApp_LF8.ViewModels.Pages;
@@ -26,7 +28,7 @@ namespace UiDesktopApp_LF8.Views.Windows
         )
         {
             ViewModel = viewModel;
-            _navigationService = navigationService; // Service lokal speichern
+            _navigationService = navigationService;
             DataContext = this;
 
             SystemThemeWatcher.Watch(this);
@@ -34,32 +36,20 @@ namespace UiDesktopApp_LF8.Views.Windows
             InitializeComponent();
             SetPageService(navigationViewPageProvider);
 
-            RootNavigation.ItemInvoked += RootNavigation_ItemInvoked;
-
             _navigationService.SetNavigationControl(RootNavigation);
 
             Loaded += async (s, e) => ViewModel.LoadComputers();
         }
 
-        private void RootNavigation_ItemInvoked(NavigationView sender, RoutedEventArgs e)
+        private void RootNavigation_SelectionChanged(NavigationView sender, RoutedEventArgs e)
         {
-            if (sender.SelectedItem is NavigationViewItem item)
+            if (sender.SelectedItem is NavigationViewItem clickedItem)
             {
-                // Is this a computer item?
-                if (item.Tag is KeyValuePair<string, MonitoringData> computer)
+                if (clickedItem.Tag is KeyValuePair<string, MonitoringData> computer)
                 {
-                    // Remember which computer we want to show
+                    Trace.WriteLine("computer item");
                     Storage.CurrentComputer = computer;
-
-                    // Navigate using the Type (this is what WPF UI expects)
-                    sender.Navigate(typeof(ComputerMonitorPage));
-                    return;
-                }
-
-                // Handle normal static items (Dashboard, Settings, etc.)
-                if (item.TargetPageType != null)
-                {
-                    sender.Navigate(item.TargetPageType);
+                    ComputerMonitorPage.CurrentInstance?.RefreshPageContent();
                 }
             }
         }

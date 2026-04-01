@@ -19,23 +19,29 @@
             <WrapPanel>
                 <ui:Card Margin="0,0,15,15" Width="320" Padding="20">
                     <StackPanel>
-                        <TextBlock Text="📊 Prozessor (CPU)" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,12"/>
-                        <ProgressBar Value="{Binding Cpu.Usage}" Height="10" Foreground="#0078D4"/>
-                        <TextBlock Text="{Binding Cpu.UsageText}" FontSize="12" Margin="0,10,0,0" Foreground="Gray"/>
+                        <Grid Margin="0,0,0,5">
+                            <TextBlock Text="📊 Processor (CPU)" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                            <TextBlock Text="{Binding Cpu.UsageText}" HorizontalAlignment="Right" FontWeight="Bold"/>
+                        </Grid>
+                        <ProgressBar Value="{Binding Cpu.PercentUsed}" Height="8" Foreground="#0078D4"/>
+                        <TextBlock Text="" FontSize="11" Margin="0,10,0,0" Foreground="Gray"/>
                     </StackPanel>
                 </ui:Card>
 
                 <ui:Card Margin="0,0,15,15" Width="320" Padding="20">
                     <StackPanel>
-                        <TextBlock Text="🧠 Arbeitsspeicher (RAM)" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,12"/>
-                        <ProgressBar Value="{Binding Ram.Usage}" Height="10" Foreground="Orange"/>
-                        <TextBlock Text="{Binding Ram.UsageText}" FontSize="12" Margin="0,10,0,0" Foreground="Gray"/>
+                        <Grid Margin="0,0,0,5">
+                            <TextBlock Text="🧠 Memory (RAM)" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                            <TextBlock Text="{Binding Ram.UsageText}" HorizontalAlignment="Right" FontWeight="Bold"/>
+                        </Grid>
+                        <ProgressBar Value="{Binding Ram.PercentUsed}" Height="8" Foreground="#0078D4"/>
+                        <TextBlock Text="{Binding Ram.UsedText}" FontSize="11" Margin="0,10,0,0" Foreground="Gray"/>
                     </StackPanel>
                 </ui:Card>
             </WrapPanel>
 
             <!-- Dynamic Drives -->
-            <TextBlock Text="💾 Festplatten" FontSize="20" FontWeight="SemiBold" Margin="0,25,0,10"/>
+            <TextBlock Text="💾 Drives" FontSize="20" FontWeight="SemiBold" Margin="0,25,0,10" Foreground="White"/>
             <ItemsControl ItemsSource="{Binding Drives}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -59,7 +65,7 @@
             </ItemsControl>
 
             <!-- Dynamic Network Adapters -->
-            <TextBlock Text="🌐 Netzwerkadapter" FontSize="20" FontWeight="SemiBold" Margin="0,25,0,10"/>
+            <TextBlock Text="🌐 Network Adapters" FontSize="20" FontWeight="SemiBold" Margin="0,25,0,10" Foreground="White"/>
             <ItemsControl ItemsSource="{Binding Networks}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -71,7 +77,6 @@
                         <ui:Card Margin="0,0,15,15" Width="320" Padding="20">
                             <StackPanel>
                                 <TextBlock Text="{Binding Name}" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,12"/>
-                                <ProgressBar Value="{Binding Usage}" Height="8" Foreground="Purple"/>
                                 <TextBlock Text="{Binding RecvSpeed}" FontSize="12" Foreground="Gray" Margin="0,8,0,0"/>
                                 <TextBlock Text="{Binding SendSpeed}" FontSize="12" Foreground="Gray"/>
                             </StackPanel>

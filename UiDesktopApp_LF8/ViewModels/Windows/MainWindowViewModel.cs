@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using RestSharp;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using UiDesktopApp_LF8.Helpers;
 using UiDesktopApp_LF8.JsonTypes;
@@ -45,12 +46,12 @@ namespace UiDesktopApp_LF8.ViewModels.Windows
         public MainWindowViewModel()
         {
             // Add static items
-            MenuItems.Add(new NavigationViewItem
+            /*MenuItems.Add(new NavigationViewItem
             {
                 Content = "Dashboard",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.Home24 },
                 TargetPageType = typeof(ComputerMonitorPage)
-            });
+            });*/
 
             // Computers will be loaded later via LoadComputersAsync()
         }
@@ -86,7 +87,7 @@ namespace UiDesktopApp_LF8.ViewModels.Windows
                     Tag = computer
                 };
 
-                ComputerMenuItems.Add(navItem);
+                MenuItems.Add(navItem);
             }
         }
     }

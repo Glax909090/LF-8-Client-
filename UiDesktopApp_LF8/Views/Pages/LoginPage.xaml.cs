@@ -1,4 +1,7 @@
-﻿using UiDesktopApp_LF8.ViewModels.Pages;
+﻿using System.Diagnostics;
+using UiDesktopApp_LF8.ViewModels.Pages;
+using UiDesktopApp_LF8.ViewModels.Windows;
+using UiDesktopApp_LF8.Views.Windows;
 using Wpf.Ui.Abstractions.Controls;
 using Wpf.Ui.Controls;
 
@@ -11,15 +14,14 @@ namespace UiDesktopApp_LF8.Views.Pages
         public LoginPage(LoginViewModel viewModel)
         {
             ViewModel = viewModel;
-            DataContext = viewModel;        // ← This sets the correct DataContext
+            DataContext = viewModel;
 
             InitializeComponent();
         }
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (sender is PasswordBox pb)
-                ViewModel.Password = pb.Password;   // direct access
+            if (sender is PasswordBox pb) ViewModel.Password = pb.Password;   // direct access
         }
     }
 }

@@ -81,7 +81,7 @@ namespace UiDesktopApp_LF8
 
             services.AddSingleton<ComputerMonitorPage>();
 
-            services.AddSingleton<DashboardViewModel>();
+            services.AddSingleton<ComputerMonitorViewModel>();
 
             services.AddSingleton<LoginPage>();
 
