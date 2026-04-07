@@ -33,7 +33,7 @@ namespace UiDesktopApp_LF8.ViewModels.Pages
             if (string.IsNullOrEmpty(ComputerName))
                 return;
 
-            Trace.WriteLine($"Updating metrics for {ComputerName}");
+            //Trace.WriteLine($"Updating metrics for {ComputerName}");
             RestRequest request = new("/get-data", Method.Post);
             request.AddBody(new GetDataRequest
             {

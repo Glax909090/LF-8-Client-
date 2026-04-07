@@ -15,83 +15,61 @@
     mc:Ignorable="d">
 
     <ScrollViewer>
-        <StackPanel Margin="25">
-            <TextBlock Text="⚙️ Alert-Konfiguration" FontSize="28" FontWeight="Bold" Margin="0,0,0,5"/>
-            <TextBlock Text="Individuelle Schwellenwerte pro System festlegen" Foreground="Gray" Margin="0,0,0,25"/>
+        <ItemsControl ItemsSource="{Binding Clients}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
 
-            <WrapPanel>
-                <ui:Card Width="350" Margin="0,0,15,15" Padding="20">
-                    <StackPanel>
-                        <Border Background="{ui:ThemeResource SystemAccentColorSecondaryBrush}" CornerRadius="4" Padding="8,4" HorizontalAlignment="Left" Margin="0,0,0,10">
-                            <TextBlock Text="CLIENT" FontSize="10" FontWeight="Bold" Foreground="White"/>
-                        </Border>
-                        <TextBlock Text="LF8-ADMIN-PC" FontSize="20" FontWeight="Bold" Margin="0,0,0,15"/>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ui:Card Width="350" Margin="0,0,15,15" Padding="20">
+                        <StackPanel>
 
-                        <Grid Margin="0,5">
-                            <TextBlock Text="CPU Warnung ab (%)" VerticalAlignment="Center"/>
-                            <ui:TextBox Text="90" Width="70" HorizontalAlignment="Right"/>
-                        </Grid>
-                        <Grid Margin="0,5">
-                            <TextBlock Text="RAM Warnung ab (%)" VerticalAlignment="Center"/>
-                            <ui:TextBox Text="85" Width="70" HorizontalAlignment="Right"/>
-                        </Grid>
+                            <Border Background="{ui:ThemeResource SystemAccentColorSecondaryBrush}"
+                            CornerRadius="4"
+                            Padding="8,4"
+                            HorizontalAlignment="Left"
+                            Margin="0,0,0,10">
+                                <TextBlock Text="CLIENT"
+                                   FontSize="10"
+                                   FontWeight="Bold"
+                                   Foreground="White"/>
+                            </Border>
 
-                        <ui:Button Content="Für ADMIN-PC speichern" 
-                                   Appearance="Primary" 
-                                   Margin="0,15,0,0" 
-                                   HorizontalAlignment="Stretch" 
-                                   Icon="Save24"/>
-                    </StackPanel>
-                </ui:Card>
+                            <!-- Bind Name -->
+                            <TextBlock Text="{Binding Name}"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Margin="0,0,0,15"/>
 
-                <ui:Card Width="350" Margin="0,0,15,15" Padding="20">
-                    <StackPanel>
-                        <Border Background="#FF8C00" CornerRadius="4" Padding="8,4" HorizontalAlignment="Left" Margin="0,0,0,10">
-                            <TextBlock Text="SERVER" FontSize="10" FontWeight="Bold" Foreground="White"/>
-                        </Border>
-                        <TextBlock Text="SQL-DATABASE-01" FontSize="20" FontWeight="Bold" Margin="0,0,0,15"/>
+                            <Grid Margin="0,5">
+                                <TextBlock Text="CPU Warning (%)" VerticalAlignment="Center"/>
+                                <ui:TextBox Text="{Binding CpuWarning}" Width="70" HorizontalAlignment="Right"/>
+                            </Grid>
 
-                        <Grid Margin="0,5">
-                            <TextBlock Text="CPU Warnung ab (%)" VerticalAlignment="Center"/>
-                            <ui:TextBox Text="75" Width="70" HorizontalAlignment="Right"/>
-                        </Grid>
-                        <Grid Margin="0,5">
-                            <TextBlock Text="Disk Warnung ab (%)" VerticalAlignment="Center"/>
-                            <ui:TextBox Text="95" Width="70" HorizontalAlignment="Right"/>
-                        </Grid>
+                            <Grid Margin="0,5">
+                                <TextBlock Text="RAM Warning (%)" VerticalAlignment="Center"/>
+                                <ui:TextBox Text="{Binding RamWarning}" Width="70" HorizontalAlignment="Right"/>
+                            </Grid>
 
-                        <ui:Button Content="Für SQL-SERVER speichern" 
-                                   Appearance="Primary" 
-                                   Margin="0,15,0,0" 
-                                   HorizontalAlignment="Stretch" 
-                                   Icon="Save24"/>
-                    </StackPanel>
-                </ui:Card>
+                            <Grid Margin="0,5">
+                                <TextBlock Text="Disk Warning (%)" VerticalAlignment="Center"/>
+                                <ui:TextBox Text="{Binding DiskWarning}" Width="70" HorizontalAlignment="Right"/>
+                            </Grid>
 
-                <ui:Card Width="350" Margin="0,0,15,15" Padding="20">
-                    <StackPanel>
-                        <Border Background="#28a745" CornerRadius="4" Padding="8,4" HorizontalAlignment="Left" Margin="0,0,0,10">
-                            <TextBlock Text="WEB-NODE" FontSize="10" FontWeight="Bold" Foreground="White"/>
-                        </Border>
-                        <TextBlock Text="WEB-SERVER-PROD" FontSize="20" FontWeight="Bold" Margin="0,0,0,15"/>
-
-                        <Grid Margin="0,5">
-                            <TextBlock Text="CPU Warnung ab (%)" VerticalAlignment="Center"/>
-                            <ui:TextBox Text="80" Width="70" HorizontalAlignment="Right"/>
-                        </Grid>
-                        <Grid Margin="0,5">
-                            <TextBlock Text="RAM Warnung ab (%)" VerticalAlignment="Center"/>
-                            <ui:TextBox Text="90" Width="70" HorizontalAlignment="Right"/>
-                        </Grid>
-
-                        <ui:Button Content="Für WEB-SERVER speichern" 
-                                   Appearance="Primary" 
-                                   Margin="0,15,0,0" 
-                                   HorizontalAlignment="Stretch" 
-                                   Icon="Save24"/>
-                    </StackPanel>
-                </ui:Card>
-            </WrapPanel>
-        </StackPanel>
+                            <ui:Button Content="Save"
+                               Appearance="Primary"
+                               Margin="0,15,0,0"
+                               HorizontalAlignment="Stretch"
+                               Icon="Save24"
+                               Command="{Binding DataContext.SaveClientCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                               CommandParameter="{Binding}"/>
+                        </StackPanel>
+                    </ui:Card>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </ScrollViewer>
 </Page>

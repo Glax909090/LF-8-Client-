@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using UiDesktopApp_LF8.ViewModels.Pages;
-using UiDesktopApp_LF8.ViewModels.Windows;
-using UiDesktopApp_LF8.Views.Windows;
+﻿using UiDesktopApp_LF8.ViewModels.Pages;
 using Wpf.Ui.Abstractions.Controls;
 using Wpf.Ui.Controls;
 

@@ -59,7 +59,7 @@ namespace UiDesktopApp_LF8.ViewModels.Windows
         /// <summary>
         /// Call this after successful login
         /// </summary>
-        public void LoadComputers()
+        public async Task LoadComputersAsync()
         {
             RestClient client = new(Storage.Url);
             RestRequest request = new("/get-data", Method.Post);
@@ -68,7 +68,7 @@ namespace UiDesktopApp_LF8.ViewModels.Windows
                 Client = null,
                 AuthToken = Storage.AuthToken
             });
-            var response = client.Execute(request);
+            var response = await client.ExecuteAsync(request);
 
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {

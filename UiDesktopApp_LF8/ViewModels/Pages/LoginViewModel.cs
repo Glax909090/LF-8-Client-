@@ -49,9 +49,6 @@ namespace UiDesktopApp_LF8.ViewModels.Pages
 
             try
             {
-                // Simulate network delay / real API call
-                await Task.Delay(1500);
-
                 // TODO: Replace this with your real authentication logic
                 if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
                 {
@@ -65,7 +62,7 @@ namespace UiDesktopApp_LF8.ViewModels.Pages
                     Username = Username,
                     Password = Password
                 });
-                var response = client.Execute(request);
+                var response = await client.ExecuteAsync(request);
 
                 AuthResponse authResponse = JsonConvert.DeserializeObject<AuthResponse>(response.Content!)!;
 
@@ -80,7 +77,7 @@ namespace UiDesktopApp_LF8.ViewModels.Pages
                         if (window.ViewModel is MainWindowViewModel mainVM)
                         {
                             Trace.WriteLine("loading computers");
-                            mainVM.LoadComputers();
+                            mainVM.LoadComputersAsync();
                         }
                     }
                     //_navigationService.Navigate(typeof(ComputerMonitorPage));

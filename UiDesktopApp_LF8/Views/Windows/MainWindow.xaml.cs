@@ -38,7 +38,7 @@ namespace UiDesktopApp_LF8.Views.Windows
 
             _navigationService.SetNavigationControl(RootNavigation);
 
-            Loaded += async (s, e) => ViewModel.LoadComputers();
+            Loaded += async (s, e) => ViewModel.LoadComputersAsync();
         }
 
         private void RootNavigation_SelectionChanged(NavigationView sender, RoutedEventArgs e)
