@@ -10,8 +10,6 @@
     Width="1100"
     Height="750"
     d:DataContext="{d:DesignInstance local:MainWindow, IsDesignTimeCreatable=True}"
-    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
-    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     ExtendsContentIntoTitleBar="True"
     WindowBackdropType="Mica"
     WindowStartupLocation="CenterScreen"
@@ -25,6 +23,7 @@
 
         <ui:NavigationView
             x:Name="RootNavigation"
+            SelectionChanged="RootNavigation_SelectionChanged"
             Grid.Row="1"
             MenuItemsSource="{Binding ViewModel.MenuItems, Mode=OneWay}"
             FooterMenuItemsSource="{Binding ViewModel.FooterMenuItems, Mode=OneWay}"

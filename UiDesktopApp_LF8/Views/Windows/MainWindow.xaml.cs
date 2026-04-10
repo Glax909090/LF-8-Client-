@@ -1,4 +1,14 @@
-﻿using UiDesktopApp_LF8.ViewModels.Windows;
+﻿using Newtonsoft.Json;
+using RestSharp;
+using System.Collections;
+using System.Diagnostics;
+using System.Windows.Controls;
+using System.Windows.Media;
+using UiDesktopApp_LF8.Helpers;
+using UiDesktopApp_LF8.JsonTypes;
+using UiDesktopApp_LF8.ViewModels.Pages;
+using UiDesktopApp_LF8.ViewModels.Windows;
+using UiDesktopApp_LF8.Views.Pages;
 using Wpf.Ui;
 using Wpf.Ui.Abstractions;
 using Wpf.Ui.Appearance;
@@ -18,7 +28,7 @@ namespace UiDesktopApp_LF8.Views.Windows
         )
         {
             ViewModel = viewModel;
-            _navigationService = navigationService; // Service lokal speichern
+            _navigationService = navigationService;
             DataContext = this;
 
             SystemThemeWatcher.Watch(this);
@@ -28,8 +38,20 @@ namespace UiDesktopApp_LF8.Views.Windows
 
             _navigationService.SetNavigationControl(RootNavigation);
 
-            // Dieses Event sorgt dafür, dass beim Start direkt das Dashboard geladen wird
-            Loaded += (s, e) => _navigationService.Navigate(typeof(Views.Pages.DashboardPage));
+            Loaded += async (s, e) => ViewModel.LoadComputersAsync();
+        }
+
+        private void RootNavigation_SelectionChanged(NavigationView sender, RoutedEventArgs e)
+        {
+            if (sender.SelectedItem is NavigationViewItem clickedItem)
+            {
+                if (clickedItem.Tag is KeyValuePair<string, MonitoringData> computer)
+                {
+                    Trace.WriteLine("computer item");
+                    Storage.CurrentComputer = computer;
+                    ComputerMonitorPage.CurrentInstance?.RefreshPageContent();
+                }
+            }
         }
 
         #region INavigationWindow methods

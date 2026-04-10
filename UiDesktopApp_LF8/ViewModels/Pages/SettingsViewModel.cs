@@ -3,63 +3,81 @@ using Wpf.Ui.Appearance;
 
 namespace UiDesktopApp_LF8.ViewModels.Pages
 {
-    public partial class SettingsViewModel : ObservableObject, INavigationAware
-    {
-        private bool _isInitialized = false;
+	using Newtonsoft.Json;
+	using RestSharp;
+	using System.Collections.ObjectModel;
+	using System.Diagnostics;
+	using UiDesktopApp_LF8.Helpers;
+	using UiDesktopApp_LF8.JsonTypes;
+	using UiDesktopApp_LF8.Models;
 
-        [ObservableProperty]
-        private string _appVersion = String.Empty;
+	public partial class SettingsViewModel
+	{
+		public ObservableCollection<ClientAlertConfig> Clients { get; set; }
 
-        [ObservableProperty]
-        private ApplicationTheme _currentTheme = ApplicationTheme.Unknown;
+		public SettingsViewModel()
+		{
+			Clients = [];
+		}
 
-        public Task OnNavigatedToAsync()
-        {
-            if (!_isInitialized)
-                InitializeViewModel();
+		//This is called from SettingsPage.xaml.cs
+		public async Task LoadClients()
+		{
+			if (Storage.AuthToken == null)
+			{
+				return;
+			}
 
-            return Task.CompletedTask;
-        }
+			RestClient client = new(Storage.Url);
+			RestRequest request = new("/get-threshold", Method.Post);
+			request.AddJsonBody(new GetThresholdRequest
+			{
+				Hostname = null,
+				AuthToken = Storage.AuthToken
+			});
+			var response = await client.ExecuteAsync(request);
 
-        public Task OnNavigatedFromAsync() => Task.CompletedTask;
+			if (response.StatusCode != System.Net.HttpStatusCode.OK)
+			{
+				return;
+			}
 
-        private void InitializeViewModel()
-        {
-            CurrentTheme = ApplicationThemeManager.GetAppTheme();
-            AppVersion = $"UiDesktopApp1 - {GetAssemblyVersion()}";
+			Dictionary<string, ThresholdData> responseData = JsonConvert.DeserializeObject<Dictionary<string, ThresholdData>>(response.Content!)!;
 
-            _isInitialized = true;
-        }
+			foreach(var _client in responseData)
+			{
+				Clients.Add(new ClientAlertConfig
+				{
+					Name = _client.Key,
+					CpuWarning = _client.Value.CpuLimit,
+					RamWarning = _client.Value.RamLimit,
+					DiskWarning = _client.Value.DiskLimit
+				});
+			}
+		}
 
-        private string GetAssemblyVersion()
-        {
-            return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString()
-                ?? String.Empty;
-        }
+		[RelayCommand]
+		private void SaveClient(ClientAlertConfig client)
+		{
+			var name = client.Name;
+			var cpu = client.CpuWarning;
+			var ram = client.RamWarning;
+			var disk = client.DiskWarning;
 
-        [RelayCommand]
-        private void OnChangeTheme(string parameter)
-        {
-            switch (parameter)
-            {
-                case "theme_light":
-                    if (CurrentTheme == ApplicationTheme.Light)
-                        break;
+			RestClient restClient = new(Storage.Url);
+			RestRequest request = new("/set-threshold", Method.Post);
+			request.AddJsonBody(new SetThresholdRequest
+			{
+				Hostname = name,
+				CpuLimit = cpu,
+				RamLimit = ram,
+				DiskLimit = disk,
+				AuthToken = Storage.AuthToken
+			});
 
-                    ApplicationThemeManager.Apply(ApplicationTheme.Light);
-                    CurrentTheme = ApplicationTheme.Light;
+			var response = restClient.Execute(request);
 
-                    break;
-
-                default:
-                    if (CurrentTheme == ApplicationTheme.Dark)
-                        break;
-
-                    ApplicationThemeManager.Apply(ApplicationTheme.Dark);
-                    CurrentTheme = ApplicationTheme.Dark;
-
-                    break;
-            }
-        }
-    }
+			Trace.WriteLine(response.Content);
+		}
+	}
 }

@@ -32,7 +32,7 @@ public class ApplicationHostService : IHostedService
             _navigationWindow!.ShowWindow();
 
             // Navigiert direkt zum Dashboard statt zur leeren Startseite
-            _navigationService.Navigate(typeof(DashboardPage));
+            _navigationService.Navigate(typeof(LoginPage));
         }
 
         await Task.CompletedTask;

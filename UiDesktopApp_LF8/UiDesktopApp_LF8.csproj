@@ -15,10 +15,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="RestSharp" Version="114.0.0" />
     <PackageReference Include="WPF-UI" Version="4.2.0" />
     <PackageReference Include="WPF-UI.DependencyInjection" Version="4.2.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0 "/>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0 " />
   </ItemGroup>
 
   <ItemGroup>
