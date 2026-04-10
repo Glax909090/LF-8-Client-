@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UiDesktopApp_LF8")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d9664caf517e9b790ec1f37fec6c7ce5eb974a94")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f20d1482448d4c915d21fdac190ac2fdbfe81ced")]
 [assembly: System.Reflection.AssemblyProductAttribute("UiDesktopApp_LF8")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UiDesktopApp_LF8")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
