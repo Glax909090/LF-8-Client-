@@ -49,6 +49,9 @@ namespace UiDesktopApp_LF8.ViewModels.Pages
 
             try
             {
+                // Simulate network delay / real API call
+                await Task.Delay(1500);
+
                 // TODO: Replace this with your real authentication logic
                 if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
                 {
